@@ -3,9 +3,11 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "license": "MIT",
+  "author": "pawankumargali",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "npm run build && node dist/src/app.js",
+    "start": "yarn run build && node dist/src/app.js",
     "start:dev": "nodemon --watch src --ext ts --exec \"tsx src/app.ts\""
   },
   "dependencies": {
