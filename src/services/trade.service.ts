@@ -6,6 +6,7 @@ import { generateUniqueCode } from '../utils/string.util.js';
 import { ONE_WEEK_IN_SECONDS } from '../utils/constants.util.js';
 import positionService from './position.service.js';
 import config from '../../config.js';
+import { APIError } from '../middleware/error.middleware.js';
 
 class TradeService {
 
@@ -21,6 +22,10 @@ class TradeService {
                 fee = 0,
                 timestamp,
               } = params;
+
+              if(!config.SUPPORTED_SYMBOLS.includes(symbol)) {
+                throw new APIError(400, `Invalid symbol. Supported symbols are ${config.SUPPORTED_SYMBOLS.join(', ')}`);
+              }
 
               // Prepare decimals with precision (store as fixed 8‐dp strings)
               const priceDecimal = new Decimal(price).toFixed(8);
@@ -61,8 +66,8 @@ class TradeService {
               await positionService.upsertPositionPostTrade(trade);
 
             return true;
-        } catch(e) {
-            console.error('Error recording trade:', e);
+        } catch(e: any) {
+            console.error('Error recording trade:', e?.message);
             throw e;
         }
     }

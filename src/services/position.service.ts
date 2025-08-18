@@ -260,7 +260,7 @@ class PositionService {
         return {
             realizedPnL: overallRealizedPnL.toFixed(8),
             unrealizedPnL: overallUnrealizedPnL.toFixed(8),
-            currency: positions[0]?.currency || 'INR',
+            currency: positions[0]?.currency || 'USD',
             positions: positionsWithUnrealizedPnL,
             updatedAt: new Date().toISOString()
         };

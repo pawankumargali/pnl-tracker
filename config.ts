@@ -7,6 +7,7 @@ const config = {
   POSITIONS_CACHE_KEY: 'user_positions', // to store user positions in app cache
   PORTFOLIO_REALIZED_PNL_CACHE_KEY: 'portfolio_realized_pnl', // to store portfolio realized PnL in app cache
   TRADE_HISTORY_CACHE_KEY: 'trade_history', // to store trade history in app cache
+  SUPPORTED_SYMBOLS: ['BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'POL', 'BASE']
 }
 
 export default config;
