@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import config  from '../config.js';
 import initRoutes from './routes/index.router.js';
 import { initErrorHandler, serializeError } from './middleware/error.middleware.js';
+import { initLogger } from './middleware/logger.middleware.js';
 const app = express();
 
 /* security + JSON */
@@ -27,6 +28,7 @@ app.use(
 
 (async function () {
   try {
+    initLogger(app);
     initRoutes(app);
     initErrorHandler(app);
     app.listen(config.PORT, () => {

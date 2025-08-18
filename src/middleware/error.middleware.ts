@@ -10,9 +10,35 @@ export class APIError extends Error {
 }
 
 export function initErrorHandler(app: Express) {
-    app.use((error: any, _req: Request, res: Response, _next: NextFunction) => {
+    app.use((error: any, req: Request, res: Response, _next: NextFunction) => {
         const errorDetails = serializeError(error);
-        console.log(errorDetails);
+        console.log(JSON.stringify({
+            type: "ERROR",
+            level: "ERROR",
+            error: {
+                ...errorDetails,
+                trace: error?.stack.substring(0, 500) || ""
+            },
+            req: {
+                url: req.url,
+                method: req.method,
+                query: req.query,
+                body: req.body,
+                params: req.params,
+                origin: req.headers.origin,
+                userAgent: req.headers['user-agent'],
+                ip: req.ip,
+                referer: req.headers.referer,
+                host: req.headers.host,
+                contentType: req.headers['content-type']
+            },
+            res: {
+                error: errorDetails.error,
+                message: errorDetails.message,
+                status: errorDetails.status
+            },
+            timestamp: new Date().toISOString()
+        }));
         return res.status(errorDetails.status).json({
             error: errorDetails.error,
             message: errorDetails.message

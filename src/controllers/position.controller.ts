@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import positionService from '../services/position.service.js';
-import { getAllMarketPrices, updateMarketPrice } from '../utils/market.util.js';
 
 export async function getPortfolio(req: Request, res: Response, next: NextFunction) {
   try {

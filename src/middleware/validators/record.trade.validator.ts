@@ -14,7 +14,7 @@ export const recordTradeInputSchema = z.object({
   side: z.enum(['BUY', 'SELL']),
   price: z.number().positive(),
   quantity: z.number().positive(),
-  fee: z.number().optional(),
+  fee: z.number().min(0, "Fee cannot be negative").optional(),
   timestamp: z.string().pipe(z.coerce.date())
 });
 

@@ -1,7 +1,7 @@
 import appCache from './cache.service.js';
 import { TradeHistory } from '../../index.d.js';
 import { APIError } from '../middleware/error.middleware.js';
-
+import config from '../../config.js';
 class MarketService {
 
     private readonly TRADE_HISTORY_CACHE_KEY = 'trade_history';
@@ -22,8 +22,10 @@ class MarketService {
                 throw new APIError(400, 'No symbols provided');
             }
 
-            if(!["BTC", "ETH", "SOL", "BNB", "POL", "ADA", "XRP"].includes(symbols[0])) {
-                throw new APIError(404, 'Unable to fetch price for symbol');
+            for(const symbol of symbols) {
+                if(!config.SUPPORTED_SYMBOLS.includes(symbol)) {
+                    throw new APIError(404, `Unable to fetch price for symbol - ${symbol}`);
+                }
             }
 
             const markPrices: Record<string, string> = {};
